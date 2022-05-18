@@ -43,7 +43,7 @@ public class StudentsRestController {
 			return studentsService.selectAllStudentsMap();
 		}
 		
-		//특정 학생 조회(PK로 조회예정)
+		//특정 학생 조회(PK로 조회)
 		@GetMapping("/students/id/{id}")
 		public StudentsVO callStudents(@PathVariable("id") int studentsId) {
 			return studentsService.selectStudentsId(studentsId);
