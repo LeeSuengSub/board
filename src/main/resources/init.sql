@@ -1,8 +1,4 @@
-<<<<<<< HEAD
--- DW라는 데이터베이스가 없으면 만드는 방법.
-=======
 -- DW라는 데이터베이스가 없으면 만드는 방법
->>>>>>> refs/remotes/origin/main
 -- CREATE database IF NOT EXISTS DW DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 -- USE DW;
 
