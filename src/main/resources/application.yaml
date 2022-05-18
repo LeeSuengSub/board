@@ -1,0 +1,26 @@
+#제목과 버전 설정
+application:
+   version: v0.0.1
+   title: LeeSuengSub
+
+#MyBatis 설정
+mybatis:
+   mapper-locations: classpath:/sqlmap/sqlmapper_*.xml #mapper 위치
+   type-aliases-package: com.dw.board.vo
+   
+#MySQL 접속정보 설정
+spring:
+   datasource:
+      initialization-mode: always # 실행시키지 않으려면 never를 적으면 됨
+      schema: classpath:init.sql
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/dw?useUnicode=true&charaterEncoding=utf-8&serverTimezone=UTC
+      username: root
+      password: 7937
+   #JSP 경로 설정
+   mvc:
+      view: 
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+      #css, js,image 폴더 위치 설정
+      static-path-pattern: /resources/static/**
