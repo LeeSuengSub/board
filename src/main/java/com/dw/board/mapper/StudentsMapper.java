@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.dw.board.VO.BoardVO;
 import com.dw.board.VO.StudentsVO;
 
 @Mapper
@@ -28,4 +29,18 @@ public interface StudentsMapper {
 	public int deleteStudents(int studentsId);
 	//학생 정보 Update
 	public int updateStudents(StudentsVO vo);
+	//학생 이름으로 학생정보 조회
+	/**
+	 * @param vo
+	 * @return
+	 * @author :  Lee SuengSub
+	 * @date : 2022. 5. 19.
+	 * comment : 학생 이름으로 학생정보 조회
+	 */
+	public StudentsVO selectStudentsOne(StudentsVO vo);
+	
+	//게시판 저장
+	public int insertBoard(BoardVO vo);
+	//게시판 조회
+	public List<BoardVO> selectAllBoardList();
 }

@@ -23,6 +23,14 @@ public class StudentsRestController {
 	
 	@Autowired
 	private StudentsService studentsService;
+	
+	//중요한 정보를 서버에 전송할 때 POST 사용!
+	@CrossOrigin
+	@PostMapping("/login")
+	public boolean callLogin(@RequestBody StudentsVO vo) {
+		return studentsService.isStudents(vo);
+	}
+	
 	//학생 저장
 		//post 는 body로 데이터를 받음 (보안)
 		@CrossOrigin

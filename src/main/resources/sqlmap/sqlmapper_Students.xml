@@ -62,4 +62,43 @@
 	WHERE Students_id = #{studentsId}
 	</update>
 	
+	<select id="selectStudentsOne" resultType="StudentsVO">
+	SELECT
+		students_id AS studentsId,
+		students_name AS studentsName,
+		students_password AS studentsPassword,
+		create_at AS createAt
+	FROM students
+	WHERE students_name = #{studentsName}
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO board
+		(
+			title,
+			content
+			<if test="studentsId > 0">
+			,students_id
+			</if>
+		)
+		VALUES
+		(
+			#{title},
+			#{content}
+			<if test="students > 0">
+			,#{studentsId}
+			</if>
+		)
+	</insert>
+	
+	<select id="selectAllBoardList" resultType="BoardVO">
+	SELECT
+		board_id AS boardId,
+		students_id AS studentsId,
+		title,
+		content,
+		update_at AS updateAt,
+		create_at AS createAt
+	FROM board
+</select>
 </mapper>
