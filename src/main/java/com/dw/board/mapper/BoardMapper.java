@@ -1,6 +1,7 @@
 package com.dw.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +12,5 @@ public interface BoardMapper {
 	//게시판 저장
 	public int insertBoard(BoardVO vo);
 	//게시판 조회
-	public List<BoardVO> selectAllBoardList();
+	public List<Map<String,Object>> selectAllBoardList();
 }
