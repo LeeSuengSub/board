@@ -33,7 +33,7 @@ public class StudentsRestController {
 		boolean isLogin = studentsService.isStudents(vo);
 		if(isLogin) {
 			//저장하는 방식 key, value
-			httpSession.setAttribute("name", "LeeSuengSub");
+			httpSession.setAttribute("name", "이상협");
 		}
 		return isLogin;
 	}
@@ -55,8 +55,12 @@ public class StudentsRestController {
 		//학생 조회(Map으로 리턴해보기)
 		@GetMapping("/students/map")
 		public List<Map<String, Object>> callStudentsMap(HttpSession httpSession){
-			String name = (String)httpSession.getAttribute("name");
-			System.out.println("세션에서 가져온 이름은 ===>"+name);
+			//세션 데이터 가져오기 (추후 로직구현 예정)
+//			String name = (String)httpSession.getAttribute("name");
+//			if(name == null) {
+//				return null;
+//			}
+//			System.out.println("세션에서 가져온 이름은 ===>"+name);
 			return studentsService.selectAllStudentsMap();
 		}
 		
