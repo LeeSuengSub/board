@@ -34,4 +34,27 @@
 	INNER JOIN students AS s
 	ON b.students_id = s.students_id
 </select>
+
+<delete id="deleteBoard">
+DELETE FROM board
+WHERE board_id = #{boardId}
+</delete>
+
+<update id="updateBoard">
+UPDATE board
+SET title = #{title},
+	content = #{content},
+	update_at = now()
+WHERE board_id = #{boardId}
+</update>
+
+<select id="selectBoard" resultType = "BoardVO">
+SELECT
+	title,
+	content,
+	create_at
+FROM board
+WHERE board_id = #{boardId}
+</select>
+
 </mapper>

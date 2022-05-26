@@ -13,4 +13,10 @@ public interface BoardMapper {
 	public int insertBoard(BoardVO vo);
 	//게시판 조회
 	public List<Map<String,Object>> selectAllBoardList();
+	//게시판 삭제
+	public int deleteBoard(int boardId);
+	//게시판 수정
+	public int updateBoard(BoardVO vo);
+	//게시판 상세보기
+	public BoardVO selectBoard(int boardId);
 }
