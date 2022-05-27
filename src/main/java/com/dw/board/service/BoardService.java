@@ -17,9 +17,6 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	@Autowired
-	private StudentsMapper studentsMapper;
-	
 	//게시판 저장
 	public int setBoard(BoardVO vo) {
 		return boardMapper.insertBoard(vo);
@@ -34,13 +31,26 @@ public class BoardService {
 		return boardMapper.deleteBoard(boardId);
 	}
 	//게시판 수정
-	@Transactional(rollbackFor = Exception.class)
 	public int updateBoard(int boardId, BoardVO vo) {
 		vo.setBoardId(boardId);
 		return boardMapper.updateBoard(vo);
 	}
 	//게시글 상세조회
 	public BoardVO selectBoard(int boardId) {
-		return boardMapper.selectBoard(boardId);
+		return boardMapper.selectBoardOne(boardId);
+	}
+	//게시물 조회수 증가
+	public int getUpdateBoardViews(int boardId) {
+		// 1. 게시판 번호를 이용해서 조회수 컬럼을 select
+		BoardVO vo =  boardMapper.selectBoardOne(boardId);
+		int views = vo.getCnt();
+		++views; //2. 조회수를 1증가함.
+		vo.setCnt(views);
+		vo.setBoardId(boardId);
+		return boardMapper.updateBoardViews(vo);
+	}
+	//작성자가 작성한 게시물 조회
+	public List<Map<String,Object>> getSearchBoardList(String studentsName){
+		return boardMapper.selectSearchBoardList(studentsName);
 	}
 }

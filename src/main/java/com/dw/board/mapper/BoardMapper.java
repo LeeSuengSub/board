@@ -18,5 +18,9 @@ public interface BoardMapper {
 	//게시판 수정
 	public int updateBoard(BoardVO vo);
 	//게시판 상세보기
-	public BoardVO selectBoard(int boardId);
+	public BoardVO selectBoardOne(int boardId);
+	//조회수 업데이트
+	public int updateBoardViews(BoardVO vo);
+	//작성자 검색
+	public List<Map<String,Object>> selectSearchBoardList(String studentsName);
 }

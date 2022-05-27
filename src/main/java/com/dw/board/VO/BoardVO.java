@@ -13,4 +13,5 @@ public class BoardVO{
 	private String content;
 	private String updateAt;
 	private String createAt;
+	private int cnt; // 조회수
 }
