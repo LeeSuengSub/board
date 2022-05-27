@@ -28,7 +28,7 @@
 		s.students_name AS students_name,
 		b.title,
 		b.content,
-		ifnull(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
+		IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
 		date_format( b.create_at,'%Y-%m-%d') AS createAt
 	FROM board AS b
 	INNER JOIN students AS s
