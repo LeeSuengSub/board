@@ -1,6 +1,6 @@
 -- DW라는 데이터베이스가 없으면 만드는 방법
- CREATE database IF NOT EXISTS DW DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
- USE DW;
+CREATE database IF NOT EXISTS DW DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE DW;
 
 -- 학생 테이블
 CREATE TABLE IF NOT EXISTS students(
