@@ -50,7 +50,7 @@
 			update_at = now()
 		WHERE board_id = #{boardId}
 	</update>
-
+	<!-- 게시판 상세보기 -->
 	<select id="selectBoardOne" resultType = "BoardVO">
 		SELECT
 			title,
