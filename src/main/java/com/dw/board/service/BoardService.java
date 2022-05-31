@@ -53,4 +53,8 @@ public class BoardService {
 	public List<Map<String,Object>> getSearchBoardList(String studentsName){
 		return boardMapper.selectSearchBoardList(studentsName);
 	}
+	//학생수, 게시글 수, 작성자 수, 총 조회수 조회
+	public Map<String, Object> getBoardStatistics(){
+		return boardMapper.selectBoardStatstics();
+	}
 }

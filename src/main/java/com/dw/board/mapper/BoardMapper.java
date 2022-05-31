@@ -23,4 +23,6 @@ public interface BoardMapper {
 	public int updateBoardViews(BoardVO vo);
 	//작성자 검색
 	public List<Map<String,Object>> selectSearchBoardList(String studentsName);
+	//통계
+	public Map<String,Object> selectBoardStatstics();
 }
