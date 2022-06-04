@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dw.board.VO.StudentsVO;
 import com.dw.board.mapper.StudentsMapper;
@@ -39,6 +40,7 @@ public class StudentsService {
 		return studentsMapper.selectStudents(StudentsId);
 	}
 	//학생 데이터 삭제
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteStudents(int studentsId) {
 		return studentsMapper.deleteStudents(studentsId);
 	}

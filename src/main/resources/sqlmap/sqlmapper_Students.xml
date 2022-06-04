@@ -50,8 +50,8 @@
 	
 	<!-- 학생 정보 삭제 -->
 	<delete id="deleteStudents">
-	DELETE From students
-	where Students_id = #{studentsId}
+	DELETE FROM students
+	WHERE students_id = #{studentsId}
 	</delete>
 	
 	<!-- 학생 정보 Update -->

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.dw.board.VO.BoardVO;
 import com.dw.board.VO.StudentsVO;
@@ -26,7 +27,7 @@ public interface StudentsMapper {
 	//특정 학생 조회
 	public StudentsVO selectStudents(int studentsId);
 	//학생 정보 삭제
-	public int deleteStudents(int studentsId);
+	public int deleteStudents(@Param("studentsId")  int studentsId);
 	//학생 정보 Update
 	public int updateStudents(StudentsVO vo);
 	//학생 이름으로 학생정보 조회
