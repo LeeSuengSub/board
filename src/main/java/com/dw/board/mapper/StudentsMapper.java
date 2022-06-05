@@ -21,7 +21,7 @@ public interface StudentsMapper {
 	 * @date : 2022. 5. 18.
 	 * comment : Alt + Shift + J
 	 */
-	public List<StudentsVO> selectAllStudentsList();
+	public List<Map<String,Object>> selectAllStudentsList();
 	//학생 정보 조회(Map)
 	public List<Map<String,Object>> selectAllStudentsMap();
 	//특정 학생 조회
@@ -40,8 +40,5 @@ public interface StudentsMapper {
 	 */
 	public StudentsVO selectStudentsOne(StudentsVO vo);
 	
-	//게시판 저장
-	public int insertBoard(BoardVO vo);
-	//게시판 조회
-	public List<BoardVO> selectAllBoardList();
+	public List<Map<String,Object>> selectSearchStudents(String studentsName);
 }

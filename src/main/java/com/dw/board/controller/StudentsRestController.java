@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dw.board.VO.StudentsVO;
 import com.dw.board.service.StudentsService;
+import com.github.pagehelper.PageInfo;
 
 @RestController
 @RequestMapping("/api/v1") //중복되는 URL을 간소화(전역변수 개념)
@@ -49,8 +51,10 @@ public class StudentsRestController {
 		//학생 조회
 		@CrossOrigin
 		@GetMapping("/students")
-		public List<StudentsVO> callStudentsList(){
-			return studentsService.getAllStudentsList();
+		public PageInfo<Map<String,Object>> callStudentsList(@RequestParam("pageNum") int pageNum,
+				@RequestParam("pageSize")int pageSize){
+			List<Map<String,Object>> list = studentsService.getAllStudentsList(pageNum, pageSize);
+			return new PageInfo<Map<String,Object>>(list);
 		}
 		
 		//학생 조회(Map으로 리턴해보기)
@@ -84,5 +88,11 @@ public class StudentsRestController {
 		@PatchMapping("/students/id/{id}")
 		public int callUpdateStudents(@PathVariable("id") int studentsId, @RequestBody StudentsVO vo) {
 			return studentsService.getUpdateStudents(vo, studentsId);
+		}
+		//학생 검색
+		@CrossOrigin
+		@GetMapping("/students/search")
+		public List<Map<String,Object>> callStudentsSearch(@RequestParam("students")String students){
+			return studentsService.getStudentsSearch(students);
 		}
 }

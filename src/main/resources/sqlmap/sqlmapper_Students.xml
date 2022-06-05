@@ -90,15 +90,13 @@
 			</if>
 		)
 	</insert>
-	
-	<select id="selectAllBoardList" resultType="BoardVO">
+	<select id="selectSearchStudents" resultType="StudentsVO">
 	SELECT
-		board_id AS boardId,
-		students_id AS studentsId,
-		title,
-		content,
-		update_at AS updateAt,
-		create_at AS createAt
-	FROM board
-</select>
+		students_id,
+		students_name,
+		students_password,
+		create_at
+	FROM students
+	WHERE students_id = #{studentsId}
+	</select>
 </mapper>
