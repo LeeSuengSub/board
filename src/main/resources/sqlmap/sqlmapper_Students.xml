@@ -92,11 +92,11 @@
 	</insert>
 	<select id="selectSearchStudents" resultType="StudentsVO">
 	SELECT
-		students_id,
-		students_name,
-		students_password,
-		create_at
+		students_id AS studentsId,
+		students_name AS studentsName,
+		students_password AS studentsPassword,
+		create_at AS createAt
 	FROM students
-	WHERE students_id = #{studentsId}
+	WHERE students_name LIKE CONCAT('%',#{studentsName},'%')
 	</select>
 </mapper>
