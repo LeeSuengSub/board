@@ -78,7 +78,7 @@ public class BoardRestController {
 			@RequestParam("pageNum") int pageNum,
 			@RequestParam("pageSize")int pageSize){
 		
-		List<Map<String,Object>> list = boardService.getAllBoardList(pageNum, pageSize);
+		List<Map<String,Object>> list = boardService.getSearchBoardList(writer, pageNum, pageSize);
 		return new PageInfo<Map<String,Object>>(list);
 	}
 	//게시판 통계 조회 학생 수, 게시글 수, 작성자 수, 총 조회수 조회
