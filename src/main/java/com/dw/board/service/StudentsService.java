@@ -49,6 +49,9 @@ public class StudentsService {
 	//학생 정보 Update
 	public int getUpdateStudents(StudentsVO vo, int studentsId) {
 		vo.setStudentsId(studentsId);
+		String password = vo.getStudentsPassword();
+		password = passwordEncoder.encode(password);
+		vo.setStudentsPassword(password);
 		return studentsMapper.updateStudents(vo);
 	}
 	//가입된 학생인지 아닌지 여부 체크
@@ -67,7 +70,8 @@ public class StudentsService {
 		return true;
 	}
 	//학생 검색하기
-	public List<Map<String,Object>> getStudentsSearch(String studentsName){
-		return studentsMapper.selectSearchStudents(studentsName);
+	public List<Map<String, Object>> getSearchStudents(String studetnsName, int pageNum, int pageSize){
+		PageHelper.startPage(pageNum, pageSize);
+		return studentsMapper.selecrSearchstudetnslist(studetnsName);
 	}
 }

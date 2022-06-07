@@ -92,7 +92,10 @@ public class StudentsRestController {
 		//학생 검색
 		@CrossOrigin
 		@GetMapping("/students/search")
-		public List<Map<String,Object>> callStudentsSearch(@RequestParam("students")String students){
-			return studentsService.getStudentsSearch(students);
+		public PageInfo<Map<String, Object>> callStudentsSearch(@RequestParam("studentsName")String studentsName,@RequestParam("pageNum")int pageNum, 
+				@RequestParam("pageSize")int pageSize){
+			List<Map<String, Object>> list = studentsService.getSearchStudents(studentsName,pageNum, pageSize); 
+//			return studentsservice.getSearchStudents(studentsName);
+			return new PageInfo<Map<String, Object>>(list);
 		}
-}
+	}

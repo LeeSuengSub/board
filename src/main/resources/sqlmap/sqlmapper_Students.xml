@@ -22,7 +22,7 @@
 		students_id AS studentsId,
 		students_name AS studentsName,
 		students_password AS studentsPassword,
-		create_at AS createAt
+		date_format(create_at, '%Y-%m-%d')as createAt
 	FROM students
 	</select>
 	
@@ -32,7 +32,7 @@
 		students_id AS studentsId,
 		students_name AS studentsName,
 		students_password AS studentsPassword,
-		create_at AS createAt
+		date_format(create_at, '%Y-%m-%d')as createAt
 	FROM students
 	</select>
 	
@@ -42,7 +42,7 @@
 		students_id AS studentsId,
 		students_name AS studentsName,
 		students_password AS studentsPassword,
-		create_at AS createAt
+		date_format(create_at, '%Y-%m-%d')as createAt
 	FROM students
 	WHERE
 		students_id = #{studentsId}
@@ -59,7 +59,7 @@
 	UPDATE students
 	SET students_name = #{studentsName},
 		students_password = #{studentsPassword}
-	WHERE Students_id = #{studentsId}
+	WHERE students_id = #{studentsId}
 	</update>
 	
 	<select id="selectStudentsOne" resultType="StudentsVO">
@@ -67,7 +67,7 @@
 		students_id AS studentsId,
 		students_name AS studentsName,
 		students_password AS studentsPassword,
-		create_at AS createAt
+		date_format(create_at, '%Y-%m-%d')as createAt
 	FROM students
 	WHERE students_name = #{studentsName}
 	</select>
@@ -90,13 +90,12 @@
 			</if>
 		)
 	</insert>
-	<select id="selectSearchStudents" resultType="StudentsVO">
-	SELECT
-		students_id AS studentsId,
-		students_name AS studentsName,
-		students_password AS studentsPassword,
-		create_at AS createAt
-	FROM students
-	WHERE students_name LIKE CONCAT('%',#{studentsName},'%')
+	<select id="selecrSearchstudetnslist" resultType="map">
+	select		
+		students_id as studentsId,
+		students_name as studentsName,
+		date_format(create_at, '%Y-%m-%d')as createAt
+	from students 
+	where students_name like concat('%',#{studentsName}, '%')
 	</select>
 </mapper>
