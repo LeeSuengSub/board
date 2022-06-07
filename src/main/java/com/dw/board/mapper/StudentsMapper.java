@@ -41,5 +41,5 @@ public interface StudentsMapper {
 	public StudentsVO selectStudentsOne(StudentsVO vo);
 	
 
-	public List<Map<String, Object>> selecrSearchstudetnslist(String studentsName);
+	public List<Map<String, Object>> selectSearchStudentsList(String studentsName);
 }

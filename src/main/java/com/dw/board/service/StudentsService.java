@@ -72,6 +72,6 @@ public class StudentsService {
 	//학생 검색하기
 	public List<Map<String, Object>> getSearchStudents(String studetnsName, int pageNum, int pageSize){
 		PageHelper.startPage(pageNum, pageSize);
-		return studentsMapper.selecrSearchstudetnslist(studetnsName);
+		return studentsMapper.selectSearchStudentsList(studetnsName);
 	}
 }

@@ -74,8 +74,12 @@ public class BoardRestController {
 	//게시물 작성자 조회
 	@CrossOrigin
 	@GetMapping("/board/search")
-	public List<Map<String,Object>> callBoardSearch(@RequestParam("writer") String writer){
-		return boardService.getSearchBoardList(writer);
+	public PageInfo<Map<String,Object>> callBoardSearch(@RequestParam("writer") String writer,
+			@RequestParam("pageNum") int pageNum,
+			@RequestParam("pageSize")int pageSize){
+		
+		List<Map<String,Object>> list = boardService.getAllBoardList(pageNum, pageSize);
+		return new PageInfo<Map<String,Object>>(list);
 	}
 	//게시판 통계 조회 학생 수, 게시글 수, 작성자 수, 총 조회수 조회
 	@CrossOrigin

@@ -90,7 +90,7 @@
 			</if>
 		)
 	</insert>
-	<select id="selecrSearchstudetnslist" resultType="map">
+	<select id="selectSearchStudentsList" resultType="map">
 	select		
 		students_id as studentsId,
 		students_name as studentsName,
