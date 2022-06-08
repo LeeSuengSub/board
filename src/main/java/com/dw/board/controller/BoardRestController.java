@@ -71,6 +71,7 @@ public class BoardRestController {
 		return boardService.getUpdateBoardViews(boardId);
 	}
 	//쿼리스트링으로 검색한 작성자 게시판 리스트 조회
+	//리턴타입을 페이징 처리했던 컨트롤러 메소드와 동일하게
 	//게시물 작성자 조회
 	@CrossOrigin
 	@GetMapping("/board/search")
