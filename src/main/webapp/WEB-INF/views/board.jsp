@@ -176,9 +176,9 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-            		'<tr>
+            					<tr>
 									<td colspan=6 style="text-align: center">게시글이 없습니다.</td>
-								</tr>';
+								</tr>;
 				</c:otherwise>
 						</c:choose>
 						<!-- <tr>
@@ -340,7 +340,7 @@
       //   if (confirm('게시글을 작성하시겠습니까?')) {
       var title = $('#title').val();
       var content = $('#content').val();
-      var studentsId = 12;
+      var studentsId = 10;
       // $('#userNo').val();
 
       //로직 구현
@@ -406,7 +406,6 @@
               getBoardList(pageNum, 10)
           	}
           }
-        
       });
     });
 
@@ -432,7 +431,6 @@
     });
     
     $('#searchBar').keyup(function (key) {
-        //엔터를 누를 때 'hello World'를 출력하고 싶음
         //13은 엔터를 의미
         var pageNum = 1;
         var pageSize = 10;
