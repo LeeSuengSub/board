@@ -176,10 +176,10 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-            					<tr>
+								<tr>
 									<td colspan=6 style="text-align: center">게시글이 없습니다.</td>
-								</tr>;
-				</c:otherwise>
+								</tr>
+							</c:otherwise>
 						</c:choose>
 						<!-- <tr>
                 <td>1</td>
@@ -216,16 +216,33 @@
 					</tbody>
 				</table>
 				<div class="pagination">
-					<c:if test="${pageHelper.hasPreviousPage}">
-						<a onclick="getBoardList(${pageNum-1},10)">Previous</a>
-					</c:if>
-					<c:forEach begin="${pageHelper.navigateFirstPage}"
-						end="${pageHelper.navigateLastPage}" var="pageNum">
-						<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
-					</c:forEach>
-					<c:if test="${pageHelper.hasNextPage}">
-						<a onclick="getBoardList(${pageNum+1},10)">Next</a>
-					</c:if>
+					<c:choose>
+						<c:when test="pageHelper.list.writer.equals('null')">
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getBoardList(${pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getBoardList(${pageNum+1},10)">Next</a>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getSearchPage(${pageNum-1},5)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}"
+									onclick="getSearchPage(${pageNum},5)">${pageNum}</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getSearchPage(${pageNum+1},5)">Next</a>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 					<!-- <a href="#">Previous</a>
             <a href="#">1</a>
             <a href="#">2</a>
@@ -432,15 +449,23 @@
     
     $('#searchBar').keyup(function (key) {
         //13은 엔터를 의미
-        var pageNum = 1;
-        var pageSize = 10;
+       // var pageNum = 1;
+       // var pageSize = 10;
+       
         if (key.keyCode == 13) {
-
           var search = $('#searchBar').val().trim(); //input에 작성한 작성자를 가져옴.
           if (search != '') {
-        	  location.href="/board/search?writer="+search+"&pageNum="+pageNum+"&pageSize="+pageSize;
+        	  //getBoardList(1, 5);
+              getBoardList(pageNum, 10)
+        	  var pageNum = $('#nowPageNum').val();
+        	  getSearchPage(search,pageNum, 5);
+        	  function getSearchPage(search, pageNum, pageSize){
+            	  location.href="/board/search?writer="+search+"&pageNum="+pageNum+"&pageSize="+pageSize;
+        		  }
+        	  }
           }
-       }
     });
+    
+    
   </script>
 </html>
