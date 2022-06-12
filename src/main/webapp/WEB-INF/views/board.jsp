@@ -231,15 +231,14 @@
 						</c:when>
 						<c:otherwise>
 							<c:if test="${pageHelper.hasPreviousPage}">
-								<a onclick="getSearchPage(${pageNum-1},5)">Previous</a>
+								<a onclick="getSearchFirstPage(${pageNum-1},5)">Previous</a>
 							</c:if>
 							<c:forEach begin="${pageHelper.navigateFirstPage}"
 								end="${pageHelper.navigateLastPage}" var="pageNum">
-								<a id="pageNum${pageNum}"
-									onclick="getSearchPage(${pageNum},5)">${pageNum}</a>
+								<a id="pageNum${pageNum}" onclick="getSearchPage('${param.writer}',${pageNum},5)">${pageNum} </a>
 							</c:forEach>
 							<c:if test="${pageHelper.hasNextPage}">
-								<a onclick="getSearchPage(${pageNum+1},5)">Next</a>
+								<a onclick="getSearchPage('${param.writer}',${pageNum+1},5)">Next</a>
 							</c:if>
 						</c:otherwise>
 					</c:choose>
@@ -446,26 +445,30 @@
       });
       }
     });
+    function getSearchFirstPage(pageNum, pageSize){
+    	var search = $('#searchBar').val().trim();
+		$('#keyword').val(search);
+		var keyword = $('#keyword').val(); 
+		location.href="/board/search?writer="+keyword+"&pageNum="+pageNum+"&pageSize="+pageSize;
+    }
+    function getSearchPage(writer,pageNum,pageSize){
+    	location.href="/board/search?writer="+writer+"&pageNum="+pageNum+"&pageSize="+pageSize;
+    }
+    
     
     $('#searchBar').keyup(function (key) {
         //13은 엔터를 의미
-       // var pageNum = 1;
-       // var pageSize = 10;
+        var pageNum = 1;
+        var pageSize = 10;
        
         if (key.keyCode == 13) {
           var search = $('#searchBar').val().trim(); //input에 작성한 작성자를 가져옴.
           if (search != '') {
-        	  //getBoardList(1, 5);
-              getBoardList(pageNum, 10)
-        	  var pageNum = $('#nowPageNum').val();
-        	  getSearchPage(search,pageNum, 5);
-        	  function getSearchPage(search, pageNum, pageSize){
-            	  location.href="/board/search?writer="+search+"&pageNum="+pageNum+"&pageSize="+pageSize;
-        		  }
-        	  }
+        	  $('#keyword').val(search);
+        	  getSearchFirstPage(pageNum,pageSize)
           }
+       	}
     });
-    
     
   </script>
 </html>
