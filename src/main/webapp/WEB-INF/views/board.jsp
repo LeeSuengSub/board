@@ -219,14 +219,14 @@
 					<c:choose>
 						<c:when test="pageHelper.list.writer.equals('null')">
 							<c:if test="${pageHelper.hasPreviousPage}">
-								<a onclick="getBoardList(${pageNum-1},10)">Previous</a>
+								<a onclick="getBoardList(${pageHelper.pageNum-1},10)">Previous</a>
 							</c:if>
 							<c:forEach begin="${pageHelper.navigateFirstPage}"
 								end="${pageHelper.navigateLastPage}" var="pageNum">
 								<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
 							</c:forEach>
 							<c:if test="${pageHelper.hasNextPage}">
-								<a onclick="getBoardList(${pageNum+1},10)">Next</a>
+								<a onclick="getBoardList(${pageHelper.pageNum+1},10)">Next</a>
 							</c:if>
 						</c:when>
 						<c:otherwise>
