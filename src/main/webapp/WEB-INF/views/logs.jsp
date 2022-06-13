@@ -55,7 +55,7 @@
             </a>
           </li>
           <li>
-          	<a href="/students">
+          	<a href="/students?pageNum=1&pageSize=10">
               <span class="icon"
                 ><ion-icon name="person-outline"></ion-icon
               ></span>
@@ -190,7 +190,7 @@
     function getPopup(logId) {
       $('.logs-popup').css('display', 'block');
       $.ajax({
-        url: 'http://localhost:8080/api/v1/logs/logId/' + logId,
+        url: '/api/v1/logs/logId/' + logId,
         type: 'Get',
         dataType: 'json',
         success: (response) => {
@@ -225,7 +225,7 @@
     function getLogsList(pageNum, pageSize) {
       $.ajax({
         url:
-          'http://localhost:8080/api/v1/logs?pageNum=' +
+          '/api/v1/logs?pageNum=' +
           pageNum +
           '&pageSize=' +
           pageSize,

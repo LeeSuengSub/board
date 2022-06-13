@@ -87,7 +87,7 @@
             </a>
           </li>
           <li>
-          	<a href="/students">
+          	<a href="/students?pageNum=1&pageSize=10">
               <span class="icon"
                 ><ion-icon name="person-outline"></ion-icon
               ></span>
@@ -210,77 +210,10 @@
       $('.update-popup').css('display', 'none');
     });
 
-    getStudentsList(1, 10);
+    //getStudentsList(1, 10);
 
     function getStudentsList(pageNum, pageSize) {
-      $.ajax({
-        url:
-          'http://localhost:8080/api/v1/students?pageNum=' +
-          pageNum +
-          '&pageSize=' +
-          pageSize,
-        type: 'GET',
-        dataType: 'json',
-        success: (response) => {
-          console.log(response);
-          let html = '';
-          let len = response.list.length;
-          if (len > 0) {
-            for (let i = 0; i < len; i++) {
-              html +=
-                '<tr onclick="getStudents(' +
-                response.list[i].studentsId +
-                ')"><td>' +
-                response.list[i].studentsId +
-                '</td><td>' +
-                response.list[i].studentsName +
-                '</td><td>' +
-                response.list[i].createAt +
-                '</td></tr>';
-            }
-
-            let paginationHtml = '';
-            if (response.hasPreviousPage) {
-              paginationHtml +=
-                '<a onclick="getStudentsList(' +
-                (response.pageNum - 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Previous</a>';
-            }
-            for (let i = 0; i < response.navigatepageNums.length; i++) {
-              paginationHtml +=
-                '<a id="pageNum' +
-                response.navigatepageNums[i] +
-                '" onclick="getStudentsList(' +
-                response.navigatepageNums[i] +
-                ',' +
-                pageSize +
-                ')" href="#">' +
-                response.navigatepageNums[i] +
-                '</a>';
-            }
-            if (response.hasNextPage) {
-              paginationHtml +=
-                '<a onclick="getStudentsList(' +
-                (response.pageNum + 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Next</a>';
-            }
-            $('.pagination').children().remove();
-            $('.pagination').append(paginationHtml);
-
-            $('#pageNum' + pageNum).css('backgroundColor', '#287bff');
-            $('#pageNum' + pageNum).css('color', '#fff');
-          } else {
-            html +=
-              '<tr><td colspan=3 style="text-align:center">게시글이 없습니다.</td></tr>';
-          }
-          $('tbody').children().remove();
-          $('tbody').append(html);
-        },
-      });
+    	location.href="/students?pageNum="+pageNum+"&pageSize="+pageSize;
     }
     //학생정보 불러오기
     function getStudents(studentsId) {
@@ -288,7 +221,7 @@
       $('.update-popup').css('display', 'block');
 
       $.ajax({
-        url: 'http://localhost:8080/api/v1/students/id/' + studentsId,
+        url: '/api/v1/students/id/' + studentsId,
         type: 'Get',
         dataType: 'json',
         success: (response) => {
@@ -313,7 +246,7 @@
           studentsPassword: studentsPassword,
         };
         $.ajax({
-          url: 'http://localhost:8080/api/v1/students/id/' + studentsId,
+          url: '/api/v1/students/id/' + studentsId,
           type: 'PATCH',
           contentType: 'application/json',
           dataType: 'json',
@@ -335,7 +268,7 @@
         let studentsId = $('#boardIdHidden').val();
 
         $.ajax({
-          url: 'http://localhost:8080/api/v1/students/id/' + studentsId,
+          url: '/api/v1/students/id/' + studentsId,
           type: 'DELETE',
           dataType: 'json',
           success: (response) => {
@@ -366,7 +299,7 @@
       let search = $('#searchBar').val();
       $.ajax({
         url:
-          'http://localhost:8080/api/v1/students/search?studentsName=' +
+          '/api/v1/students/search?studentsName=' +
           search +
           '&pageNum=' +
           pageNum +
@@ -452,7 +385,7 @@
         studentsPassword: studentsPassword,
       };
       $.ajax({
-        url: 'http://localhost:8080/api/v1/students',
+        url: '/api/v1/students',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
