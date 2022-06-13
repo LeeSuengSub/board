@@ -65,7 +65,7 @@
 						class="icon"><ion-icon name="home-outline"></ion-icon></span> <span
 						class="title">Dashboard</span>
 				</a></li>
-				<li><a href="/students"> <span class="icon"><ion-icon
+				<li><a href="/students?pageNum=1&pageSize=10"> <span class="icon"><ion-icon
 								name="person-outline"></ion-icon></span> <span class="title">Students</span>
 				</a></li>
 				<li><a href="/logs"> <span class="icon"><ion-icon
@@ -213,18 +213,35 @@
                 <td>2022-05-18</td>
                 <td><span class="row">22</span></td>
               </tr> -->
-					</tbody>
+			</tbody>
 				</table>
 				<div class="pagination">
-					<c:if test="${pageHelper.hasPreviousPage}">
-						<a onclick="getBoardList(${pageNum-1},10)">Previous</a>
-					</c:if>
-					<c:forEach begin="${pageHelper.navigateFirstPage}" end="${pageHelper.navigateLastPage}" var="pageNum">
-						<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
-					</c:forEach>
-					<c:if test="${pageHelper.hasNextPage}">
-						<a onclick="getBoardList(${pageNum+1},10)">Next</a>
-					</c:if>
+					<c:choose>
+						<c:when test="pageHelper.list.writer.equals('null')">
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getBoardList(${pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getBoardList(${pageNum+1},10)">Next</a>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum-1},5)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getSearchPage('${param.writer}',${pageNum},5)">${pageNum} </a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum+1},5)">Next</a>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 					<!-- <a href="#">Previous</a>
             <a href="#">1</a>
             <a href="#">2</a>
@@ -428,27 +445,29 @@
       });
       }
     });
+    
     function getSearchFirstPage(pageNum, pageSize){
     	var search = $('#searchBar').val().trim();
 		$('#keyword').val(search);
-		var keyword = $('#keyword').val(); 
+		var keyword = $('#keyword').val();
 		location.href="/board/search?writer="+keyword+"&pageNum="+pageNum+"&pageSize="+pageSize;
     }
-    
     function getSearchPage(writer,pageNum,pageSize){
     	location.href="/board/search?writer="+writer+"&pageNum="+pageNum+"&pageSize="+pageSize;
     }
     
     
+    
     $('#searchBar').keyup(function (key) {
         //13은 엔터를 의미
         var pageNum = 1;
-        var pageSize = 10;
+        var pageSize = 5;
        
         if (key.keyCode == 13) {
           var search = $('#searchBar').val().trim(); //input에 작성한 작성자를 가져옴.
           if (search != '') {
-        	  location.href='/board/search?writer='+search+'&pageNum='+pageNum+'&pageSize='+pageSize;
+        	  $('#keyword').val(search);
+        	  getSearchFirstPage(pageNum,pageSize)
           }
        	}
     });
