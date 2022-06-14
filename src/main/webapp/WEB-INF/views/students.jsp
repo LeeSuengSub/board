@@ -95,7 +95,7 @@
              </a>
           </li>
           <li>
-            <a href="/logs">
+            <a href="/logs?pageNum=1&pageSize=10">
               <span class="icon"
                 ><ion-icon name="lock-closed-outline"></ion-icon
               ></span>
@@ -150,6 +150,22 @@
               </tr>
             </thead>
             <tbody id="boardData">
+            <c:choose>
+				<c:when test="${fn:length(pageHelper.list) > 0}">
+					<c:forEach items="${pageHelper.list}" var="item">
+						<tr onclick="getStudents(${item.studentsId})">
+							<td>${item.studentsId}</td>
+							<td>${item.studentsName}</td>
+							<td>${item.createAt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan=3 style="text-align: center">게시글이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
               <!-- <tr>
                 <td>hyunsangwon</td>
                 <td>현상원</td>
@@ -210,30 +226,28 @@
       $('.update-popup').css('display', 'none');
     });
 
-    //getStudentsList(1, 10);
-
     function getStudentsList(pageNum, pageSize) {
-    	location.href="/students?pageNum="+pageNum+"&pageSize="+pageSize;
+    	location.href = "/students?pageNum="+pageNum+"&pageSize="+pageSize;
     }
-    //학생정보 불러오기
+  //학생정보 불러오기
     function getStudents(studentsId) {
-      console.log(studentsId);
-      $('.update-popup').css('display', 'block');
+        console.log(studentsId);
+        $('.update-popup').css('display', 'block');
 
-      $.ajax({
-        url: '/api/v1/students/id/' + studentsId,
-        type: 'Get',
-        dataType: 'json',
-        success: (response) => {
-          $('#studentsId').val(response.studentsId);
-          $('#studentsName').val(response.studentsName);
-          $('#studentsPassword').val(response.studentsPassword);
-          $('#boardIdHidden').val(studentsId);
-        },
-      });
-    }
-
-    //학생 정보 수정
+        $.ajax({
+          url: '/api/v1/students/id/' + studentsId,
+          type: 'Get',
+          dataType: 'json',
+          success: (response) => {
+            $('#studentsId').val(response.studentsId);
+            $('#studentsName').val(response.studentsName);
+            $('#studentsPassword').val(response.studentsPassword);
+            $('#boardIdHidden').val(studentsId);
+          },
+        });
+      }
+    
+  //학생 정보 수정
     $('#contentUpdate').click(function () {
       if (confirm('수정하시겠습니까?')) {
         let studentsId = $('#boardIdHidden').val();
@@ -261,8 +275,7 @@
         });
       }
     });
-
-    //학생 삭제(탈퇴)
+  //학생 삭제(탈퇴)
     $('#contentDelete').click(function () {
       if (confirm('정말 탈퇴하시겠습니까?')) {
         let studentsId = $('#boardIdHidden').val();
@@ -274,7 +287,6 @@
           success: (response) => {
             if (response > 0) {
               alert('삭제하였습니다.');
-              location.reload();
               getStudentsList(1, 10);
               $('.update-popup').css('display', 'none'); // 게시물 상세 화면 감추기
             }
@@ -282,125 +294,6 @@
         });
       }
     });
-
-    getStudentsSearch(1, 5);
-    //검색 페이징 구현(1)
-    function getStudentsSearch(pageNum, pageSize) {
-      $('#searchBar').keyup((key) => {
-        if (key.keyCode == 13) {
-          let search = $('#searchBar').val();
-          console.log(search);
-          getStudentsClick(1, 5);
-        }
-      });
-    }
-    // 검색 페이징 구현(2)
-    function getStudentsClick(pageNum, pageSize) {
-      let search = $('#searchBar').val();
-      $.ajax({
-        url:
-          '/api/v1/students/search?studentsName=' +
-          search +
-          '&pageNum=' +
-          pageNum +
-          '&pageSize=' +
-          pageSize,
-        type: 'Get',
-        dataType: 'json',
-        success: (response) => {
-          console.log(response);
-          let html = '';
-          if (response.list.length > 0) {
-            for (let i = 0; i < response.list.length; i++) {
-              html +=
-                '<tr onclick="getStudents(' +
-                response.list[i].studentsId +
-                ')"><td>' +
-                response.list[i].studentsId +
-                '</td><td>' +
-                response.list[i].studentsName +
-                '</td><td>' +
-                response.list[i].createAt +
-                '</td></tr>';
-            }
-            let paginationHtml = '';
-            if (response.hasPreviousPage) {
-              paginationHtml +=
-                '<a onclick="getStudentsClick(' +
-                (response.pageNum - 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Previous</a>';
-            }
-            for (let i = 0; i < response.navigatepageNums.length; i++) {
-              paginationHtml +=
-                '<a id="Num' +
-                response.navigatepageNums[i] +
-                '" onclick="getStudentsClick(' +
-                response.navigatepageNums[i] +
-                ',' +
-                pageSize +
-                ')" href="#">' +
-                response.navigatepageNums[i] +
-                '</a>';
-            }
-            if (response.hasNextPage) {
-              paginationHtml +=
-                '<a onclick="getStudentsClick(' +
-                (response.pageNum + 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Next</a>';
-            }
-            $('.pagination').children().remove();
-            $('.pagination').append(paginationHtml);
-
-            $('#Num' + pageNum).css('backgroundColor', '#287bff');
-            $('#Num' + pageNum).css('color', '#fff');
-          } else {
-            html +=
-              '<tr><td colspan=3 style="text-align:center">게시글이 없습니다.</td></tr>';
-          }
-          $('tbody').children().remove();
-          $('tbody').append(html);
-        },
-      });
-    }
-
-    $('.btn').click(function () {
-      $('.write-popup').css('display', 'block');
-    });
-    $('.btn-cancel').click(function () {
-      $('.write-popup').css('display', 'none');
-      // $('#studentsId').val('');
-      $('#Name').val('');
-      $('#Password').val('');
-    });
-    $('.btn-success').click(function () {
-      let studentsName = $('#Name').val();
-      let studentsPassword = $('#Password').val();
-
-      let jsonData = {
-        studentsName: studentsName,
-        studentsPassword: studentsPassword,
-      };
-      $.ajax({
-        url: '/api/v1/students',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify(jsonData),
-        success: (data) => {
-          console.log(data);
-          if (data > 0) {
-            $('.write-popup').css('display', 'none');
-            $('#Name').val('');
-            $('#Password').val('');
-            $('tbody').children().remove();
-            getStudentsList(1, 10);
-          }
-        },
-      });
-    });
+  
   </script>
 </html>

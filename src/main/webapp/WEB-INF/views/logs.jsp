@@ -63,7 +63,7 @@
              </a>
           </li>
           <li>
-            <a href="/logs">
+            <a href="/logs?pageNum=1&pageSize=10">
               <span class="icon"
                 ><ion-icon name="lock-closed-outline"></ion-icon
               ></span>
@@ -117,6 +117,26 @@
               </tr>
             </thead>
             <tbody id="boardData">
+            <c:choose>
+							<c:when test="${fn:length(pageHelper.list) > 0}">
+								<c:forEach items="${pageHelper.list}" var="item">
+									<tr onclick="getPopup(${item.log_id})">
+										<td>${item.log_id}</td>
+										<td>${item.ip}</td>
+										<td>${item.latitude}</td>
+										<td>${item.longitude}</td>
+										<td>${item.url}</td>
+										<td>${item.http_method}</td>
+										<td>${item.create_at}</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan=7 style="text-align: center">게시글이 없습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
               <!-- <tr onclick="getPopup()">
                 <td>1</td>
                 <td>192.158.0.252</td>
@@ -220,88 +240,8 @@
       });
     }
 
-    getLogsList(1, 10);
-
     function getLogsList(pageNum, pageSize) {
-      $.ajax({
-        url:
-          '/api/v1/logs?pageNum=' +
-          pageNum +
-          '&pageSize=' +
-          pageSize,
-        type: 'GET',
-        dataType: 'json',
-        success: (response) => {
-          // console.log(response);
-          let html = '';
-          let len = response.list.length;
-          if (len > 0) {
-            for (let i = 0; i < len; i++) {
-              html +=
-                '<tr onclick="getPopup(' +
-                response.list[i].log_id +
-                ')"><td>' +
-                response.list[i].log_id +
-                '</td><td>' +
-                response.list[i].ip +
-                '</td><td>' +
-                response.list[i].latitude +
-                '</td><td>' +
-                response.list[i].longitude +
-                '</td><td>' +
-                response.list[i].url +
-                '</td><td>' +
-                response.list[i].http_method +
-                '</td><td>' +
-                response.list[i].create_at +
-                '</td></tr>';
-            }
-            var paginationHtml = '';
-            if (response.hasPreviousPage) {
-              //이전 페이지가 true라면
-              paginationHtml +=
-                '<a onclick="getLogsList(' +
-                (response.pageNum - 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Previous</a>';
-            }
-            for (var i = 0; i < response.navigatepageNums.length; i++) {
-              // 페이지 번호 길이 만큼 for문 실행
-              paginationHtml +=
-                '<a id="pageNum' +
-                response.navigatepageNums[i] +
-                '" onclick="getLogsList(' +
-                response.navigatepageNums[i] +
-                ',' +
-                pageSize +
-                ')" href="#">' +
-                response.navigatepageNums[i] +
-                '</a>';
-            }
-            if (response.hasNextPage) {
-              //다음 페이지가 true라면
-              paginationHtml +=
-                '<a onclick="getLogsList(' +
-                (response.pageNum + 1) +
-                ',' +
-                pageSize +
-                ')" href="#">Next</a>';
-            }
-            $('.pagination').children().remove();
-            $('.pagination').append(paginationHtml);
-
-            $('#pageNum' + pageNum).css('backgroundColor', '#287bff');
-            $('#pageNum' + pageNum).css('color', '#fff');
-          } else {
-            html +=
-              '<tr><td colspan=6 style="text-align:center">게시글이 없습니다.</td></tr>'; // colspan이 핵심
-          }
-
-          $('tbody').children().remove();
-          $('tbody').append(html);
-        },
-      });
-    }
+        location.href = "/logs?pageNum"+pageNum+"&pageSize="+pageSize;
+      }
   </script>
 </html>

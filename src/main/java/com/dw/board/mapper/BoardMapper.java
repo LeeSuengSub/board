@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.dw.board.VO.BoardVO;
 
@@ -25,4 +26,8 @@ public interface BoardMapper {
 	public List<Map<String,Object>> selectSearchBoardList(String studentsName);
 	//통계
 	public Map<String,Object> selectBoardStatstics();
+	
+	public int selectAllBoardTotal();
+	
+	public List<Map<String, Object>> selectSearchBoardListTEST(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 }

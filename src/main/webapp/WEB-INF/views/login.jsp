@@ -74,7 +74,7 @@
           data: JSON.stringify(jsonData),
           success: function (response) {
             if (response) {
-              location.href ="/board"; //페이지 이동!
+              location.href ="/board?pageNum=1&pageSize=10"; //페이지 이동!
             } else {
               alert('비밀번호 혹은 이름이 틀렸습니다.');
             }
