@@ -19,7 +19,9 @@ public class WebConfig implements WebMvcConfigurer{
 		//excludePathPatterns : 해당 URL은 인터셉터 대상에서 제외
 		registry.addInterceptor(interceptor).excludePathPatterns("/api/v1/logs","/join", "/api/v1/login",
 				"/resources/static/css/*",
-				"/resources/static/js/*" ,
+				"/resources/static/js/*",
+				"/resources/static/images/*",
+				"/error",
 				"/login");
 	}
 	
