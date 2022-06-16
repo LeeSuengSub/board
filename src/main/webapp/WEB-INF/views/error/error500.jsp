@@ -26,7 +26,7 @@
     <div class="container">
         <div class="content">
             <h2>500</h2>
-            <h4>Opps! Internal Server Error.</h4>
+            <h4>Oops! Internal Server Error.</h4>
             <p>서버에 에러가 발생했습니다.</p>
         </div>
     </div>

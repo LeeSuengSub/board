@@ -17,13 +17,13 @@
 		<div class="write-popup">
 			<div class="editor">
 				<div class="input-box">
-					<label for="studentsName">작성자 : </label>
-					<input id="studentsName" type="text" value="현상원" readonly />
-					<input id="studentsId" type="hidden" value="${studentsId}">
+					<label for="studentsName">작성자 : </label> <input id="studentsName"
+						type="text" value="현상원" readonly /> <input id="studentsId"
+						type="hidden" value="${studentsId}">
 				</div>
 				<div class="input-box">
-					<label for="title">제목 : </label>
-					<input id="title" type="text" placeholder="제목을 입력하세요..." />
+					<label for="title">제목 : </label> <input id="title" type="text"
+						placeholder="제목을 입력하세요..." />
 				</div>
 				<div class="input-box">
 					<textarea id="content" rows="10" cols="65"
@@ -58,23 +58,25 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li><a href="#"> <span class="icon"><ion-icon
-								name="logo-apple"></ion-icon></span> <span class="title">DW
-							Board</span>
+				<li><a href="#"> <span class="icon">
+				<ion-icon name="logo-apple"></ion-icon></span>
+				 <span class="title">DW Board</span>
 				</a></li>
 				<li><a href="/board?pageNum=1&pageSize=10"> <span
 						class="icon"><ion-icon name="home-outline"></ion-icon></span> <span
 						class="title">Dashboard</span>
 				</a></li>
-				<li><a href="/students?pageNum=1&pageSize=10"> <span class="icon"><ion-icon
-								name="person-outline"></ion-icon></span> <span class="title">Students</span>
+				<li><a href="/students?pageNum=1&pageSize=10"> <span
+						class="icon"><ion-icon name="person-outline"></ion-icon></span> <span
+						class="title">Students</span>
 				</a></li>
-				<li><a href="/logs?pageNum=1&pageSize=10"> <span class="icon"><ion-icon
-								name="lock-closed-outline"></ion-icon></span> <span class="title">logs</span>
+				<li><a href="/logs?pageNum=1&pageSize=10"> <span
+						class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+						<span class="title">logs</span>
 				</a></li>
-				<li><a href="#"> <span class="icon"><ion-icon
-								name="log-out-outline"></ion-icon></span> <span class="title">Sign
-							Out</span>
+				<li><a href="#"> <span class="icon">
+				<ion-icon name="log-out-outline"></ion-icon></span>
+				 <span class="title">Sign Out</span>
 				</a></li>
 			</ul>
 		</div>
@@ -141,6 +143,7 @@
 			<div class="recentOrders">
 				<div class="cardHeader">
 					<h2>Board List</h2>
+					<a href="/excel" class="excel-btn">엑셀 다운로드</a>
 					<a href="#" class="btn">글 작성</a>
 				</div>
 				<table>
@@ -214,7 +217,7 @@
                 <td>2022-05-18</td>
                 <td><span class="row">22</span></td>
               </tr> -->
-			</tbody>
+					</tbody>
 				</table>
 				<div class="pagination">
 					<c:choose>
@@ -232,14 +235,18 @@
 						</c:when>
 						<c:otherwise>
 							<c:if test="${pageHelper.hasPreviousPage}">
-								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum-1},10)">Previous</a>
+								<a
+									onclick="getSearchPage('${param.writer}',${pageHelper.pageNum-1},10)">Previous</a>
 							</c:if>
 							<c:forEach begin="${pageHelper.navigateFirstPage}"
 								end="${pageHelper.navigateLastPage}" var="pageNum">
-								<a id="pageNum${pageNum}" onclick="getSearchPage('${param.writer}',${pageNum},10)">${pageNum} </a>
+								<a id="pageNum${pageNum}"
+									onclick="getSearchPage('${param.writer}',${pageNum},10)">${pageNum}
+								</a>
 							</c:forEach>
 							<c:if test="${pageHelper.hasNextPage}">
-								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum+1},10)">Next</a>
+								<a
+									onclick="getSearchPage('${param.writer}',${pageHelper.pageNum+1},10)">Next</a>
 							</c:if>
 						</c:otherwise>
 					</c:choose>
@@ -286,5 +293,5 @@
       item.addEventListener('mouseover', activeLink);
     });
  </script>
- <script src="/resources/static/js/board.js"></script>
+<script src="/resources/static/js/board.js"></script>
 </html>
