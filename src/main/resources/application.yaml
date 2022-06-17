@@ -9,12 +9,12 @@ server:
 #개발 버전 설정
 spring:
    profiles:
-      active: dev
+      active: env
 
 #MyBatis 설정
 mybatis:
    mapper-locations: classpath:/sqlmap/sqlmapper_*.xml
-   type-aliases-package: com.dw.board.vo
+   type-aliases-package: com.dw.board.VO
 
 #페이징 처리      
 pagehelper:
