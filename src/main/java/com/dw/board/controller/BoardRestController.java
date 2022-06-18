@@ -25,68 +25,70 @@ public class BoardRestController {
 
 	@Autowired
 	private BoardService boardService;
-	
-	//게시판 저장 (C)
+
+	// 게시판 저장 (C)
 	@CrossOrigin
 	@PostMapping("/board")
 	public int callSaveBoard(@RequestBody BoardVO vo) {
 		return boardService.setBoard(vo);
 	}
-	//게시판 전체조회 (R)
+
+	// 게시판 전체조회 (R)
 	@CrossOrigin
 	@GetMapping("/board")
-	//리턴타입을 List<Map<String,Object>> => PageInfo<Map<String,Object>>
-	public PageInfo<Map<String,Object>> callBoardList(@RequestParam("pageNum") int pageNum,
-			@RequestParam("pageSize")int pageSize){
-		
-		List<Map<String,Object>> list = boardService.getAllBoardList(pageNum, pageSize);
-		return new PageInfo<Map<String,Object>>(list);
+	// 리턴타입을 List<Map<String,Object>> => PageInfo<Map<String,Object>>
+	public PageInfo<Map<String, Object>> callBoardList(@RequestParam("pageNum") int pageNum,
+			@RequestParam("pageSize") int pageSize) {
+
+		List<Map<String, Object>> list = boardService.getAllBoardList(pageNum, pageSize);
+		return new PageInfo<Map<String, Object>>(list);
 	}
-	//게시판 삭제 (D)
+
+	// 게시판 삭제 (D)
 	@CrossOrigin
 	@DeleteMapping("/board/boardId/{id}")
 	public int callRemoveBoard(@PathVariable("id") int boardId) {
 		return boardService.deleteBoard(boardId);
 	}
-	
-	//게시판 수정 (U)
+
+	// 게시판 수정 (U)
 	@CrossOrigin
 	@PatchMapping("/board/boardId/{id}")
 	public int callUpdateBoard(@PathVariable("id") int boardId, @RequestBody BoardVO vo) {
 		return boardService.updateBoard(boardId, vo);
 	}
 
-	//게시판 상세보기 (R)
+	// 게시판 상세보기 (R)
 	@CrossOrigin
 	@GetMapping("/board/boardId/{id}")
 	public BoardVO callBoard(@PathVariable("id") int boardId) {
 		return boardService.selectBoard(boardId);
 	}
-	
-	//게시물 조회수 카운트
+
+	// 게시물 조회수 카운트
 	@CrossOrigin
 	@PatchMapping("/board/views/boardId/{id}")
 	public int callBoardViews(@PathVariable("id") int boardId) {
 		System.out.println(boardId);
 		return boardService.getUpdateBoardViews(boardId);
 	}
-	//쿼리스트링으로 검색한 작성자 게시판 리스트 조회
-	//리턴타입을 페이징 처리했던 컨트롤러 메소드와 동일하게
-	//게시물 작성자 조회
+
+	// 쿼리스트링으로 검색한 작성자 게시판 리스트 조회
+	// 리턴타입을 페이징 처리했던 컨트롤러 메소드와 동일하게
+	// 게시물 작성자 조회
 	@CrossOrigin
 	@GetMapping("/board/search")
-	public PageInfo<Map<String,Object>> callBoardSearch(@RequestParam("writer") String writer,
-			@RequestParam("pageNum") int pageNum,
-			@RequestParam("pageSize")int pageSize){
-		
-		List<Map<String,Object>> list = boardService.getSearchBoardList(writer, pageNum, pageSize);
-		return new PageInfo<Map<String,Object>>(list);
+	public PageInfo<Map<String, Object>> callBoardSearch(@RequestParam("writer") String writer,
+			@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+
+		List<Map<String, Object>> list = boardService.getSearchBoardList(writer, pageNum, pageSize);
+		return new PageInfo<Map<String, Object>>(list);
 	}
-	//게시판 통계 조회 학생 수, 게시글 수, 작성자 수, 총 조회수 조회
+
+	// 게시판 통계 조회 학생 수, 게시글 수, 작성자 수, 총 조회수 조회
 	@CrossOrigin
 	@GetMapping("/board/Statistics")
-	public Map<String, Object> callBoardStatistics(){
+	public Map<String, Object> callBoardStatistics() {
 		return boardService.getBoardStatistics();
 	}
 }
-

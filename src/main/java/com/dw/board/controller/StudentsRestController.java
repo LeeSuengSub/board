@@ -22,76 +22,77 @@ import com.dw.board.service.StudentsService;
 import com.github.pagehelper.PageInfo;
 
 @RestController
-@RequestMapping("/api/v1") //중복되는 URL을 간소화(전역변수 개념)
+@RequestMapping("/api/v1") // 중복되는 URL을 간소화(전역변수 개념)
 public class StudentsRestController {
-	
+
 	@Autowired
 	private StudentsService studentsService;
-	
-	//중요한 정보를 서버에 전송할 때 POST 사용!
+
+	// 중요한 정보를 서버에 전송할 때 POST 사용!
 	@CrossOrigin
 	@PostMapping("/login")
 	public boolean callLogin(@RequestBody StudentsVO vo, HttpSession httpSession) {
 		boolean isLogin = studentsService.isStudents(vo, httpSession);
 		return isLogin;
 	}
-	
-	//학생 저장
-		//post 는 body로 데이터를 받음 (보안)
-		@CrossOrigin
-		@PostMapping("/students")
-		public int callSaveStudents(@RequestBody StudentsVO vo) {
-			return studentsService.setStudents(vo);
-		}
-		
-		//학생 조회
-		@CrossOrigin
-		@GetMapping("/students")
-		public PageInfo<Map<String,Object>> callStudentsList(@RequestParam("pageNum") int pageNum,
-				@RequestParam("pageSize")int pageSize){
-			List<Map<String,Object>> list = studentsService.getAllStudentsList(pageNum, pageSize);
-			return new PageInfo<Map<String,Object>>(list);
-		}
-		
-		//학생 조회(Map으로 리턴해보기)
-		@GetMapping("/students/map")
-		public List<Map<String, Object>> callStudentsMap(HttpSession httpSession){
-			//세션 데이터 가져오기 (추후 로직구현 예정)
+
+	// 학생 저장
+	// post 는 body로 데이터를 받음 (보안)
+	@CrossOrigin
+	@PostMapping("/students")
+	public int callSaveStudents(@RequestBody StudentsVO vo) {
+		return studentsService.setStudents(vo);
+	}
+
+	// 학생 조회
+	@CrossOrigin
+	@GetMapping("/students")
+	public PageInfo<Map<String, Object>> callStudentsList(@RequestParam("pageNum") int pageNum,
+			@RequestParam("pageSize") int pageSize) {
+		List<Map<String, Object>> list = studentsService.getAllStudentsList(pageNum, pageSize);
+		return new PageInfo<Map<String, Object>>(list);
+	}
+
+	// 학생 조회(Map으로 리턴해보기)
+	@GetMapping("/students/map")
+	public List<Map<String, Object>> callStudentsMap(HttpSession httpSession) {
+		// 세션 데이터 가져오기 (추후 로직구현 예정)
 //			String name = (String)httpSession.getAttribute("name");
 //			if(name == null) {
 //				return null;
 //			}
 //			System.out.println("세션에서 가져온 이름은 ===>"+name);
-			return studentsService.selectAllStudentsMap();
-		}
-		
-		//특정 학생 조회(PK로 조회)
-		@CrossOrigin
-		@GetMapping("/students/id/{id}")
-		public StudentsVO callStudents(@PathVariable("id") int studentsId) {
-			return studentsService.selectStudentsId(studentsId);
-		}
-		
-		//학생 삭제
-		@CrossOrigin
-		@DeleteMapping("/students/id/{id}")
-		public int callRemoveStudents(@PathVariable("id") int studentsId) {
-			return studentsService.deleteStudents(studentsId);
-		}
-		
-		//학생 수정
-		@CrossOrigin
-		@PatchMapping("/students/id/{id}")
-		public int callUpdateStudents(@PathVariable("id") int studentsId, @RequestBody StudentsVO vo) {
-			return studentsService.getUpdateStudents(vo, studentsId);
-		}
-		//학생 검색
-		@CrossOrigin
-		@GetMapping("/students/search")
-		public PageInfo<Map<String, Object>> callStudentsSearch(@RequestParam("studentsName")String studentsName,@RequestParam("pageNum")int pageNum, 
-				@RequestParam("pageSize")int pageSize){
-			List<Map<String, Object>> list = studentsService.getSearchStudents(studentsName,pageNum, pageSize); 
-//			return studentsservice.getSearchStudents(studentsName);
-			return new PageInfo<Map<String, Object>>(list);
-		}
+		return studentsService.selectAllStudentsMap();
 	}
+
+	// 특정 학생 조회(PK로 조회)
+	@CrossOrigin
+	@GetMapping("/students/id/{id}")
+	public StudentsVO callStudents(@PathVariable("id") int studentsId) {
+		return studentsService.selectStudentsId(studentsId);
+	}
+
+	// 학생 삭제
+	@CrossOrigin
+	@DeleteMapping("/students/id/{id}")
+	public int callRemoveStudents(@PathVariable("id") int studentsId) {
+		return studentsService.deleteStudents(studentsId);
+	}
+
+	// 학생 수정
+	@CrossOrigin
+	@PatchMapping("/students/id/{id}")
+	public int callUpdateStudents(@PathVariable("id") int studentsId, @RequestBody StudentsVO vo) {
+		return studentsService.getUpdateStudents(vo, studentsId);
+	}
+
+	// 학생 검색
+	@CrossOrigin
+	@GetMapping("/students/search")
+	public PageInfo<Map<String, Object>> callStudentsSearch(@RequestParam("studentsName") String studentsName,
+			@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+		List<Map<String, Object>> list = studentsService.getSearchStudents(studentsName, pageNum, pageSize);
+//			return studentsservice.getSearchStudents(studentsName);
+		return new PageInfo<Map<String, Object>>(list);
+	}
+}

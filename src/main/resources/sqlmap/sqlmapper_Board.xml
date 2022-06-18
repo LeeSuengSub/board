@@ -1,41 +1,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--Mybatis에게 Mapper 경로를 적어야 한다.  -->
+<!--Mybatis에게 Mapper 경로를 적어야 한다. -->
 <mapper namespace="com.dw.board.mapper.BoardMapper">
 
-<!-- 게시판 저장 -->
+	<!-- 게시판 저장 -->
 	<insert id="insertBoard">
 		INSERT INTO board
 		(
-			title,
-			content
-			<if test="studentsId != 0"><!-- null값이 0 -->
+		title,
+		content
+		<if test="studentsId != 0"><!-- null값이 0 -->
 			,students_id
-			</if>
+		</if>
 		)
 		VALUES
 		(
-			#{title},
-			#{content}
-			<if test="studentsId != 0">
+		#{title},
+		#{content}
+		<if test="studentsId != 0">
 			,#{studentsId}
-			</if>
+		</if>
 		)
 	</insert>
-	
-	<!-- join으로 조회할 때 resultType을 Map으로-->
+
+	<!-- join으로 조회할 때 resultType을 Map으로 -->
 	<select id="selectAllBoardList" resultType="map">
 		SELECT
-			b.board_id AS boardId,
-			s.students_id AS studentsId,
-			s.students_name AS students_name,
-			b.title,
-			b.content,
-			IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
-			date_format( b.create_at,'%Y-%m-%d') AS createAt,
-			b.cnt
+		b.board_id AS boardId,
+		s.students_id AS studentsId,
+		s.students_name AS students_name,
+		b.title,
+		b.content,
+		IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
+		date_format( b.create_at,'%Y-%m-%d') AS createAt,
+		b.cnt
 		FROM board AS b
 		INNER JOIN students AS s
-		ON b.students_id = s.students_id
+		ON b.students_id =
+		s.students_id
 	</select>
 
 	<delete id="deleteBoard">
@@ -46,17 +47,17 @@
 	<update id="updateBoard">
 		UPDATE board
 		SET title = #{title},
-			content = #{content},
-			update_at = now()
+		content = #{content},
+		update_at = now()
 		WHERE board_id = #{boardId}
 	</update>
 	<!-- 게시판 상세보기 -->
-	<select id="selectBoardOne" resultType = "BoardVO">
+	<select id="selectBoardOne" resultType="BoardVO">
 		SELECT
-			title,
-			content,
-			create_at,
-			cnt
+		title,
+		content,
+		create_at,
+		cnt
 		FROM board
 		WHERE board_id = #{boardId}
 	</select>
@@ -65,67 +66,70 @@
 	<update id="updateBoardViews">
 		UPDATE board
 		SET
-			cnt = #{cnt}
+		cnt = #{cnt}
 		WHERE
-			board_id = #{boardId}
+		board_id = #{boardId}
 	</update>
 
 	<select id="selectSearchBoardList" resultType="map">
 		SELECT
-			b.board_id AS boardId,
-			s.students_id AS studentsId,
-			s.students_name AS students_name,
-			b.title,
-			b.content,
-			IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
-			date_format( b.create_at,'%Y-%m-%d') AS createAt,
-			b.cnt
+		b.board_id AS boardId,
+		s.students_id AS studentsId,
+		s.students_name AS students_name,
+		b.title,
+		b.content,
+		IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
+		date_format( b.create_at,'%Y-%m-%d') AS createAt,
+		b.cnt
 		FROM board AS b
 		INNER JOIN students AS s
-		ON b.students_id = s.students_id
-		WHERE s.students_name LIKE CONCAT('%',#{studentsName},'%')
+		ON b.students_id =
+		s.students_id
+		WHERE s.students_name LIKE
+		CONCAT('%',#{studentsName},'%')
 	</select>
 
-	<select id="selectBoardStatstics" resultType = "map">
-	select
+	<select id="selectBoardStatstics" resultType="map">
+		select
 		count(*) as studentsCnt,
 		(select
-			count(*)
+		count(*)
 		from board
 		) as boardCnt,
 		(select
-			count(distinct(b.students_id))
-		from board b 
-		inner join students s 
+		count(distinct(b.students_id))
+		from board b
+		inner join students s
 		on b.students_id = s.students_id) as writerCnt,
-		(select 
-			sum(cnt)
+		(select
+		sum(cnt)
 		from board) as viewsCnt
-	from students
+		from students
 	</select>
-	
+
 	<select id="selectSearchBoardListTEST" resultType="map">
 		SELECT
-			b.board_id AS boardId,
-			s.students_id AS studentsId,
-			s.students_name AS students_name,
-			b.title,
-			b.content,
-			IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
-			date_format( b.create_at,'%Y-%m-%d') AS createAt,
-			b.cnt
+		b.board_id AS boardId,
+		s.students_id AS studentsId,
+		s.students_name AS students_name,
+		b.title,
+		b.content,
+		IFNULL(date_format(b.update_at,'%Y-%m-%d'),'-') AS updateAt,
+		date_format( b.create_at,'%Y-%m-%d') AS createAt,
+		b.cnt
 		FROM board AS b
 		INNER JOIN students AS s
-		ON b.students_id = s.students_id
+		ON b.students_id =
+		s.students_id
 		LIMIT #{pageNum},#{pageSize}
 	</select>
-	
+
 	<select id="selectAllBoardTotal" resultType="int">
-	SELECT
+		SELECT
 		COUNT(*) AS boardCnt
-	FROM board as b
-	INNER JOIN students AS s
-	ON b.students_id = s.students_id
+		FROM board as b
+		INNER JOIN students AS s
+		ON b.students_id = s.students_id
 	</select>
-	
+
 </mapper>

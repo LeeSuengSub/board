@@ -17,13 +17,12 @@ public class StudentsController {
 
 	@Autowired
 	private StudentsService studentsService;
-	
+
 	@GetMapping("/students")
-	public String loadStudentsPage(ModelMap map, 
-			@RequestParam("pageNum") int pageNum,
+	public String loadStudentsPage(ModelMap map, @RequestParam("pageNum") int pageNum,
 			@RequestParam("pageSize") int pageSize) {
-		List<Map<String,Object>>list = studentsService.getAllStudentsList(pageNum, pageSize);
-		PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(list);
+		List<Map<String, Object>> list = studentsService.getAllStudentsList(pageNum, pageSize);
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
 		map.addAttribute("pageHelper", pageInfo);
 		return "students";
 	}
