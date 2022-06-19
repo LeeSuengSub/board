@@ -146,13 +146,40 @@
 					</tbody>
 				</table>
 				<div class="pagination">
+				<c:choose>
+						<c:when test="pageHelper.list.writer.equals('null')">
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getBoardList(${pageHelper.pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getBoardList(${pageNum},10)">${pageNum}</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getBoardList(${pageHelper.pageNum+1},10)">Next</a>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+				<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getSearchPage('${param.writer}',${pageNum},10)">${pageNum}
+								</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getSearchPage('${param.writer}',${pageHelper.pageNum+1},10)">Next</a>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 					<!-- <a href="#">Previous</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">Next</a> -->
+            			<a href="#">1</a>
+            			<a href="#">2</a>
+            			<a href="#">3</a>
+            			<a href="#">4</a>
+            			<a href="#">5</a>
+            			<a href="#">Next</a> -->
 				</div>
 			</div>
 		</div>
@@ -250,6 +277,28 @@
         });
       }
     });
-  
+    function getSearchFirstPage(pageNum, pageSize) {
+    	var search = $('#searchBar').val().trim();
+    	$('#keyword').val(search);
+    	var keyword = $('#keyword').val();
+    	location.href = "/students/search?writer=" + keyword + "&pageNum=" + pageNum + "&pageSize=" + pageSize;
+    }
+
+    function getSearchPage(writer, pageNum, pageSize) {
+    	location.href = "/students/search?writer=" + writer + "&pageNum=" + pageNum + "&pageSize=" + pageSize;
+    }
+    $('#searchBar').keyup(function(key) {
+    	//13은 엔터를 의미
+    	var pageNum = 1;
+    	var pageSize = 10;
+
+    	if (key.keyCode == 13) {
+    		var search = $('#searchBar').val().trim(); //input에 작성한 작성자를 가져옴.
+    		if (search != '') {
+    			location.href = "/board/search?writer=" + search + "&pageNum=" + pageNum + "&pageSize=" + pageSize;
+    		}
+
+    	}
+    });
   </script>
 </html>

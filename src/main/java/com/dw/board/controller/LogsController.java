@@ -26,4 +26,5 @@ public class LogsController {
 	return "logs";
 	}
 	
+	
 }

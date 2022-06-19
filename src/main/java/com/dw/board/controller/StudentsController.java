@@ -26,4 +26,12 @@ public class StudentsController {
 		map.addAttribute("pageHelper", pageInfo);
 		return "students";
 	}
+	@GetMapping("/students/search")
+	public String callSearchBoard(ModelMap map, @RequestParam("writer") String writer,
+			@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+		List<Map<String, Object>> list = studentsService.getSearchStudents(writer, pageNum, pageSize);
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+		map.addAttribute("pageHelper", pageInfo);
+		return "students";
+	}
 }

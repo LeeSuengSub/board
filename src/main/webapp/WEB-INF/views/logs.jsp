@@ -161,6 +161,33 @@
             </tbody>
           </table>
           <div class="pagination">
+          <c:choose>
+						<c:when test="pageHelper.list.writer.equals('null')">
+							<c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getLogsList(${pageHelper.pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getLogsList(${pageNum},10)">${pageNum}</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getLogsList(${pageHelper.pageNum+1},10)">Next</a>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+          <c:if test="${pageHelper.hasPreviousPage}">
+								<a onclick="getLogsList(${pageHelper.pageNum-1},10)">Previous</a>
+							</c:if>
+							<c:forEach begin="${pageHelper.navigateFirstPage}"
+								end="${pageHelper.navigateLastPage}" var="pageNum">
+								<a id="pageNum${pageNum}" onclick="getLogsList(${pageNum},10)">${pageNum}
+								</a>
+							</c:forEach>
+							<c:if test="${pageHelper.hasNextPage}">
+								<a onclick="getLogsList(${pageHelper.pageNum+1},10)">Next</a>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
             <!-- <a href="#">Previous</a>
             <a href="#">1</a>
             <a href="#">2</a>
@@ -241,7 +268,10 @@
     }
 
     function getLogsList(pageNum, pageSize) {
-        location.href = "/logs?pageNum"+pageNum+"&pageSize="+pageSize;
+        location.href = "/logs?pageNum="+pageNum+"&pageSize="+pageSize;
       }
+    function getSearchFirstPage(pageNum, pageSize) {
+    	location.href = "/logs?pageNum=" + pageNum + "&pageSize=" + pageSize;
+    }
   </script>
 </html>
