@@ -295,7 +295,7 @@
     	if (key.keyCode == 13) {
     		var search = $('#searchBar').val().trim(); //input에 작성한 작성자를 가져옴.
     		if (search != '') {
-    			location.href = "/board/search?writer=" + search + "&pageNum=" + pageNum + "&pageSize=" + pageSize;
+    			location.href = "/students/search?writer=" + search + "&pageNum=" + pageNum + "&pageSize=" + pageSize;
     		}
 
     	}
