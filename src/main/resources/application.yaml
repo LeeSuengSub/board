@@ -9,7 +9,7 @@ server:
 #개발 버전 설정
 spring:
    profiles:
-      active: env
+      active: dev
 
 #MyBatis 설정
 mybatis:
