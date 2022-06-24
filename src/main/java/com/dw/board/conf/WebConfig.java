@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer{
 				"/resources/static/js/*",
 				"/resources/static/images/*",
 				"/error",
-				"/login");
+				"/login",
+				"/students");
 	}
 	
 	
